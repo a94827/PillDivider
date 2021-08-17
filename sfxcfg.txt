@@ -1,0 +1,20 @@
+﻿;!@Install@!UTF-8!
+;
+; 7z SFX-installer for PillDivider
+; Configuration file
+; (c) Ageyev A.V, 2016
+; Edit with Notepad!
+;
+Title="Делитель таблетки"
+BeginPrompt="Установка / обновление программы \"Делитель таблетки\""
+CancelPrompt="Вы хотите прервать распаковку?"
+ExtractDialogText="Подождите, пожалуйста..."
+ExtractPathText="Пожалуйста, введите путь распаковки:"
+ExtractTitle="Распаковка..."
+GUIFlags="8+32+64+256+4096"
+GUIMode="1"
+InstallPath="C:\\PillDivider"
+OverwriteMode="0"
+FinishMessage="Распаковка успешно завершена"
+Shortcut="Du,{%%T\\PillDivider.exe},{},{},Делитель таблетки},{PillDivider},{},{%%T\\PillDivider.exe},{0}"
+;!@InstallEnd@!
