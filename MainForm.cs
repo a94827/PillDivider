@@ -5,9 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using AgeyevAV.ExtForms;
-using AgeyevAV;
-using AgeyevAV.Config;
+using FreeLibSet.Forms;
+using FreeLibSet.Core;
+using FreeLibSet.Config;
 
 namespace PillDivider
 {
@@ -24,23 +24,23 @@ namespace PillDivider
 
       efpMode = new EFPRadioButtons(efpForm, rbPill);
 
-      efpGrammage = new EFPNumEditBox(efpForm, edGrammage);
-      efpGrammage.Minimum = 0.001m;
+      efpGrammage = new EFPDoubleEditBox(efpForm, edGrammage);
+      efpGrammage.Minimum = 0.001;
       efpGrammage.EnabledEx = efpMode[0].CheckedEx;
 
-      efpConcentration = new EFPNumEditBox(efpForm, edConcentartion);
-      efpConcentration.Minimum = 0.001m;
+      efpConcentration = new EFPDoubleEditBox(efpForm, edConcentartion);
+      efpConcentration.Minimum = 0.001;
       efpConcentration.EnabledEx = efpMode[1].CheckedEx;
 
-      efpDoze = new EFPNumEditBox(efpForm, edDoze);
-      efpDoze.Minimum = 0.000001m;
+      efpDoze = new EFPDoubleEditBox(efpForm, edDoze);
+      efpDoze.Minimum = 0.000001;
 
       efpDozeMU = new EFPListComboBox(efpForm, cbDozeMU);
       efpDozeMU.Codes = new string[] { "мг/кг" };
       efpDozeMU.SelectedIndex = 0;
       efpDozeMU.CanBeEmpty = false;
 
-      efpMass = new EFPNumEditBox(efpForm, edMass);
+      efpMass = new EFPDoubleEditBox(efpForm, edMass);
       efpMass.Minimum = 1;
 
       EFPButton efpOk = new EFPButton(efpForm, btnOk);
@@ -59,17 +59,17 @@ namespace PillDivider
 
     EFPFormProvider efpForm;
     EFPRadioButtons efpMode;
-    EFPNumEditBox efpGrammage;
-    EFPNumEditBox efpConcentration;
-    EFPNumEditBox efpDoze;
+    EFPDoubleEditBox efpGrammage;
+    EFPDoubleEditBox efpConcentration;
+    EFPDoubleEditBox efpDoze;
     EFPListComboBox efpDozeMU;
-    EFPNumEditBox efpMass;
+    EFPDoubleEditBox efpMass;
 
     #endregion
 
     #region Расчет
 
-    void efpOk_Click(object Sender, EventArgs Args)
+    void efpOk_Click(object sender, EventArgs args)
     {
       if (!efpForm.ValidateForm())
         return;
@@ -80,42 +80,42 @@ namespace PillDivider
       }
       catch { }
 
-      double Doze; // в мг/г
+      double doze; // в мг/г
       switch (efpDozeMU.SelectedIndex)
       {
         case 0:
-          Doze = efpDoze.DoubleValue / 1000.0;
+          doze = efpDoze.Value / 1000.0;
           break;
         default:
           throw new BugException("Неизвестная единица измерения");
       }
 
-      double Mass = efpMass.DoubleValue;
-      double Doze2 = Doze * Mass;
+      double mass = efpMass.Value;
+      double doze2 = doze * mass;
 
       StringBuilder sb = new StringBuilder();
       sb.Append("Для животного с массой ");
-      sb.Append(Mass);
+      sb.Append(mass);
       sb.Append(" г. требуется доза ");
-      sb.Append(Doze2);
+      sb.Append(doze2);
       sb.Append(" мг.");
       sb.Append(Environment.NewLine);
 
       if (efpMode.SelectedIndex == 0)
       {
         // таблетка
-        double Grammage = efpGrammage.DoubleValue; // в мг
-        double PillCount = Doze * Mass / Grammage;
+        double grammage = efpGrammage.Value; // в мг
+        double pillCount = doze * mass / grammage;
 
         sb.Append("Это составляет ");
-        sb.Append(PillCount.ToString("0.0##"));
+        sb.Append(pillCount.ToString("0.0##"));
         sb.Append(" таблетки");
 
-        if (PillCount < 1.0)
+        if (pillCount < 1.0)
         {
-          double x1 = Math.Round(1.0 / PillCount, 0, MidpointRounding.AwayFromZero);
+          double x1 = Math.Round(1.0 / pillCount, 0, MidpointRounding.AwayFromZero);
           double pc2 = 1.0 / x1;
-          double dev = Math.Abs(PillCount - pc2) / PillCount * 100;
+          double dev = Math.Abs(pillCount - pc2) / pillCount * 100;
           if (dev <= 20.0)
           {
             sb.Append(" (1/");
@@ -134,11 +134,11 @@ namespace PillDivider
       else
       {
         // Жидкость
-        double Concentration = efpConcentration.DoubleValue; // в мг/мл
-        double Volume = Doze * Mass / Concentration;
+        double concentration = efpConcentration.Value; // в мг/мл
+        double volume = doze * mass / concentration;
 
         sb.Append("Это составляет ");
-        sb.Append(Volume.ToString("0.0##"));
+        sb.Append(volume.ToString("0.0##"));
         sb.Append(" мл раствора");
       }
 
@@ -153,29 +153,29 @@ namespace PillDivider
 
     private void SaveValues()
     {
-      using (RegistryCfg Cfg = new RegistryCfg(RegKeyName, false))
+      using (RegistryCfg cfg = new RegistryCfg(RegKeyName, false))
       {
-        Cfg.SetInt("Режим", efpMode.SelectedIndex);
-        Cfg.SetDouble("Грамматура", efpGrammage.DoubleValue);
-        Cfg.SetDouble("Концентрация", efpConcentration.DoubleValue);
-        Cfg.SetDouble("Дозировка", efpDoze.DoubleValue);
-        Cfg.SetString("ЕдИзмДозировки", efpDozeMU.SelectedCode);
-        Cfg.SetDouble("Масса", efpMass.DoubleValue);
+        cfg.SetInt("Режим", efpMode.SelectedIndex);
+        cfg.SetDouble("Грамматура", efpGrammage.Value);
+        cfg.SetDouble("Концентрация", efpConcentration.Value);
+        cfg.SetDouble("Дозировка", efpDoze.Value);
+        cfg.SetString("ЕдИзмДозировки", efpDozeMU.SelectedCode);
+        cfg.SetDouble("Масса", efpMass.Value);
       }
     }
 
     private void LoadValues()
     {
-      using (RegistryCfg Cfg = new RegistryCfg(RegKeyName, true))
+      using (RegistryCfg cfg = new RegistryCfg(RegKeyName, true))
       {
-        efpMode.SelectedIndex = Cfg.GetInt("Режим");
-        efpGrammage.DoubleValue = Cfg.GetDouble("Грамматура");
-        efpConcentration.DoubleValue = Cfg.GetDouble("Концентрация");
-        efpDoze.DoubleValue = Cfg.GetDouble("Дозировка");
-        efpDozeMU.SelectedCode = Cfg.GetString("ЕдИзмДозировки");
+        efpMode.SelectedIndex = cfg.GetInt("Режим");
+        efpGrammage.Value = cfg.GetDouble("Грамматура");
+        efpConcentration.Value = cfg.GetDouble("Концентрация");
+        efpDoze.Value = cfg.GetDouble("Дозировка");
+        efpDozeMU.SelectedCode = cfg.GetString("ЕдИзмДозировки");
         if (efpDozeMU.SelectedIndex < 0)
           efpDozeMU.SelectedIndex = 0;
-        efpMass.DoubleValue = Cfg.GetDouble("Масса");
+        efpMass.Value = cfg.GetDouble("Масса");
       }
     }
 

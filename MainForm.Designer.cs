@@ -29,19 +29,19 @@ namespace PillDivider
     private void InitializeComponent()
     {
       this.label4 = new System.Windows.Forms.Label();
-      this.edMass = new AgeyevAV.ExtForms.NumEditBox();
+      this.edMass = new FreeLibSet.Controls.DoubleEditBox();
       this.label5 = new System.Windows.Forms.Label();
       this.cbDozeMU = new System.Windows.Forms.ComboBox();
-      this.edDoze = new AgeyevAV.ExtForms.NumEditBox();
+      this.edDoze = new FreeLibSet.Controls.DoubleEditBox();
       this.label3 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.panel1 = new System.Windows.Forms.Panel();
       this.btnOk = new System.Windows.Forms.Button();
-      this.edGrammage = new AgeyevAV.ExtForms.NumEditBox();
+      this.edGrammage = new FreeLibSet.Controls.DoubleEditBox();
       this.label1 = new System.Windows.Forms.Label();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.label6 = new System.Windows.Forms.Label();
-      this.edConcentartion = new AgeyevAV.ExtForms.NumEditBox();
+      this.edConcentartion = new FreeLibSet.Controls.DoubleEditBox();
       this.label7 = new System.Windows.Forms.Label();
       this.panel2 = new System.Windows.Forms.Panel();
       this.rbPill = new System.Windows.Forms.RadioButton();
@@ -250,19 +250,19 @@ namespace PillDivider
     #endregion
 
     private System.Windows.Forms.Label label4;
-    private AgeyevAV.ExtForms.NumEditBox edMass;
+    private FreeLibSet.Controls.DoubleEditBox edMass;
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.ComboBox cbDozeMU;
-    private AgeyevAV.ExtForms.NumEditBox edDoze;
+    private FreeLibSet.Controls.DoubleEditBox edDoze;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Panel panel1;
     private System.Windows.Forms.Button btnOk;
-    private AgeyevAV.ExtForms.NumEditBox edGrammage;
+    private FreeLibSet.Controls.DoubleEditBox edGrammage;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.Label label6;
-    private AgeyevAV.ExtForms.NumEditBox edConcentartion;
+    private FreeLibSet.Controls.DoubleEditBox edConcentartion;
     private System.Windows.Forms.Label label7;
     private System.Windows.Forms.Panel panel2;
     private System.Windows.Forms.RadioButton rbLiquid;

@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Делитель таблетки")]
 [assembly: AssemblyCompany("Агеев А.В.")]
 [assembly: AssemblyProduct("PillDivider")]
-[assembly: AssemblyCopyright("Copyright © Агеев А.В., 2016")]
+[assembly: AssemblyCopyright("Copyright © Агеев А.В., 2016, 2022")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -27,4 +27,4 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.0.2")]
